@@ -87,7 +87,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>footballComp</finalName>
+		<finalName>vpnClient</finalName>
 	</build>
 
 </project>
