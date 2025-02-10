@@ -4,8 +4,6 @@ import com.fowobi.networking.util.EncryptionUtil;
 import com.fowobi.networking.util.PropertyReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -15,9 +13,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 
-public class VPNClientModified {
+public class VPNConnector {
 
-    private static final Logger log = LoggerFactory.getLogger(VPNClientModified.class);
+    private static final Logger log = LoggerFactory.getLogger(VPNConnector.class);
 
     public String connect(String status) throws Exception {
 
@@ -47,14 +45,10 @@ public class VPNClientModified {
                 out.println(Base64.getEncoder().encodeToString(encryptedMessage));
                 String response = in.readLine();
                 output = EncryptionUtil.decrypt(Base64.getDecoder().decode(response), secretKey);
+                log.info("Server says: {}", output);
             }
-        } catch (IOException e) {
-            try {
-                socket.close();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            throw new RuntimeException(e);
+
+            log.info("Out of while loop");
         } catch (Exception e) {
             try {
                 socket.close();
